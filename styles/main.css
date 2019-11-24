@@ -37,9 +37,13 @@ td {
     -o-transition: 0.2s ease;
 }
 .select-unit {
-    background: green;
+    background: #1b5e20;
 }
 
 .select-move {
-    background: red;
+    background: #4caf50;
+}
+
+.kill-him {
+    background: #c62828;
 }
