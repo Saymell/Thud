@@ -25,8 +25,10 @@ area.addEventListener('click', (e) => {
             item.classList.remove('select-move');
         })
         cell.classList.add('select-unit');
-        out = moveDwarf(+cell.dataset.x, +cell.dataset.y);
-        out.move.forEach((item) => {
+        let dwarf = new Unit();
+        out = dwarf.canMove(+cell.dataset.x, +cell.dataset.y);
+        console.log(out);
+        out.moveVariant.forEach((item) => {
             if (item.classList.contains('null')) {
                 item.classList.add('select-move');
             }
@@ -144,4 +146,44 @@ function moveDwarf(x, y) {
         move: selectMove
     }
     return out;
+}
+
+class Unit {
+
+    selectUnit(currentCell) {
+        currentCell.classList.add('select-unit');
+    }
+
+    canMove(x, y) {
+        let
+            selectedUnit = document.querySelector('td[data-X="' + x + '"][data-Y="' + y + '"]'),
+            moveVariant = [];
+
+
+        for (let j = -15; j < 15; j++) {
+            if (j === 0) { j = 1 }
+
+            let
+                gorizontal = document.querySelector('td[data-X="' + (x + j) + '"][data-Y="' + (y) + '"]'),
+                vertical = document.querySelector('td[data-X="' + (x) + '"][data-Y="' + (y + j) + '"]'),
+                diagonalOne = document.querySelector('td[data-X="' + (x + j) + '"][data-Y="' + (y + j) + '"]'),
+                diagonalTwo = document.querySelector('td[data-X="' + (x - j) + '"][data-Y="' + (y + j) + '"]'),
+                directions = [gorizontal, vertical, diagonalOne, diagonalTwo];
+
+            directions.forEach(e => {
+                if (e != null ) {
+                    if (e.classList.contains('null') != true) {
+                        directions.splice(directions.indexOf(e), 1);
+                        console.log(directions)
+                    }
+                    moveVariant.push(e);
+                }
+            })    
+        }
+        let resault = {
+            selectedUnit: selectedUnit,
+            moveVariant: moveVariant
+        }
+        return resault;       
+    }
 }
